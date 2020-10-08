@@ -19,21 +19,5 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 @RequestMapping("/user")
 public class EcommerceController {
-@Reference
-    private CommodityService commodityService;
-@Reference
-    private JurisdictionService jurisdictionService;
-@Reference
-    private UserService userService;
-@Reference
-    private PictureService pictureService;
-@Reference
-    private Picture1Service pictureService1;
-@Reference
-    private Picture2Service pictureService2;
-@Reference
-    private TypeService typeService;
-@Reference
-    private OrderService orderService;
 
 }

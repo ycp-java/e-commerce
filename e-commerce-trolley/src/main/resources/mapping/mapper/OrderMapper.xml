@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ytc.mapper.OrderMapper" >
-  <resultMap id="BaseResultMap" type="com.ytc.model.Order" >
+  <resultMap id="BaseResultMap" type="com.ytc.model.Orders" >
     <id column="orderid" property="orderid" jdbcType="VARCHAR" />
     <result column="commodityid" property="commodityid" jdbcType="INTEGER" />
     <result column="userid" property="userid" jdbcType="INTEGER" />
