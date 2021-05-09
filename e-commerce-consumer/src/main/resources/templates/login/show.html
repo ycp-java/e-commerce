@@ -1,0 +1,192 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit|ie-stand|ie-comp" />
+<title>
+                                         用户登录
+</title>
+<link rel="stylesheet" href="https://w1.hoopchina.com.cn/passport-prod/static/pc/css/reset.css?v=2020042301">
+<link rel="stylesheet" href="https://w1.hoopchina.com.cn/passport-prod/static/pc/css/passport.css?v=2020042301">
+<link rel="stylesheet"    href="https://w1.hoopchina.com.cn/passport-prod/static/pc/css/passport-index.css?v=2020042301">
+
+<script src="https://w1.hoopchina.com.cn/passport-prod/static/pc/js/lib/MD5.js"></script>
+<script src="https://w1.hoopchina.com.cn/passport-prod/static/pc/js/cookie.js"></script>
+</head>
+<script src="../js/jquery.min.js"></script>
+<body class="">
+    <div class="bg-img">
+        <img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=3222041039,800257851&fm=11&gp=0.jpg" alt=""><!--页面背景-->
+    </div>
+    <div class="user-login">
+    	
+	        <div class="back-title">
+	            <a href="#" onclick="toindex()"> <b><</b>返回上页</a>
+	        </div>
+        
+        <div class="login-wrap">
+            <div class="logo">
+
+						<!-- <img src="https://w1.hoopchina.com.cn/passport-prod/static/pc/images/logo.png" alt=""> -->
+						<span  class="" style="font-size:36px;color:red;">
+							用
+						</span>
+						<span  class="" style="font-size:36px;color:red;">
+							户
+						</span>
+				        <span  class="" style="font-size:36px;color:red;">
+							登录
+						</span>
+            </div>
+            		<!-- 登录名、密码登录+验证码 -->
+		            <form class="common-form login-form" id="loginFrom" autocomplete="off" >
+		                <ul>
+		                    <li>
+		                        <div class="ipt-wrap">
+		                            <input onblur="fn1()" autocomplete="off" type="text" name="username" placeholder="用户名" data-rule="empty" data-name="帐号"   id="userName" tabindex="1">
+                                    <span id="sp1"></span>
+                                </div>
+		                    </li>
+		                    <li id="J_insertVali">
+		                        <div class="ipt-wrap">
+		                            <input onblur="fn2()" autocomplete="off" type="password" name="userpwd" placeholder="密码" data-rule="empty" data-name="密码"  id="userPwd" tabindex="2">
+                                    <br><span id="sp2"></span>
+                                </div>
+		                    </li>
+							<li>
+							 <input type="text" name="imgcode" placeholder="验证码" id="yanzen" onblur="fn3()"><img th:src="@{/imgCode}" id="imgCode">
+                             <a id="shuaxin" href="">点击刷新验证码</a>
+                                <br><span id="sp3"></span>
+                            </li>
+		                   <!-- <li>
+							    <div id="float-captcha"></div>
+		                        <div id="float-captcha" class="hide"></div>
+		                         <img id="wait" class="aligncenter" onerror="this.style.display='none'" src="https://w1.hoopchina.com.cn/passport-prod/static/pc/images/loading-bubbles.svg" alt="Loading icon" >
+		                    </li>-->
+							<li>
+							  <!-- <input type="button" class="submit-btn" id="" value="登录"> -->
+							   <input class="submit-btn" type="button" onclick="loginUser()" value="登录"><br>
+							   <input class="submit-btn" type="button" value="注册" onclick="zhuce()">
+							</li>
+		                </ul>
+		            </form>
+		           
+
+        </div>
+ <div class="pop-wrap">
+				<div class="pop-hd">提示
+
+				</div>
+				<div class="pop-txt">
+
+				</div>
+				<div class="pop-btn pop-btn2">
+
+				</div>
+		</div>
+		<div id="cboxOverlay" ></div>
+		</div>
+
+</body>
+
+  <script type="text/javascript">
+	  //返回上一页
+	  function toindex(){
+	  	location.href="/toindex";
+	  }
+    //验证码图片点击刷新
+    $("#shuaxin").click(function() {
+		$("#imgCode").attr("src", "/imgCode?t=" + new Date().getTime());
+	})
+
+		//注册跳转方法
+		function zhuce() {
+			location.href = "/indexZhuCe";
+		}
+
+		//定义一个点击次数
+		var times = 1;
+
+		//验证用户名密码：1.是否存在，2.是否密码是否错误，3.验证码是否正确
+		function loginUser() {
+
+			//判断用户，密码，验证码是否为空
+			var name = fn1();
+			var pwd = fn2();
+			var yanzen = fn3();
+
+			if (times < 5) {//点击次数不能大于五次
+				if (name && pwd && yanzen) {
+					$.ajax({
+						url: "/loginUser",
+						type: "post",
+						async: false,
+						data: $("#loginFrom").serialize(),
+						success: function (data) {
+							if (data == "1") {
+								alert("验证码错误");
+							}
+							if (data == "2") {
+								alert("用户名错误")
+							}
+							if (data == "3") {
+								alert("密码错误")
+							}
+							if (data == "4") {
+								//登录成功跳转查询页面，商品展示页面
+								location.href = "/query";
+							}
+						}, error: function () {
+							alert("登录错误");
+						}
+					})
+				} else {
+					alert("不能为空");
+				}
+			} else {
+				alert("操作太频繁，稍等一会或者5分钟后刷新页面")
+			}
+			//点击一次加一次点击次数
+			times++;
+		}
+
+		//用户名不能为空
+		function fn1() {
+			var name = $("#userName").val();
+			if (name != null && name != "") {
+				$("#sp1").html("<font color='green'>√</font>")
+				return true;
+			} else {
+				$("#sp1").html("<font color='red'>用户名不能为空</font>")
+				return false;
+			}
+		}
+
+		//密码不能为空
+		function fn2() {
+			var pwd = $("#userPwd").val();
+			if (pwd != null && pwd != "") {
+				$("#sp2").html("<font color='green'>√</font>")
+				return true;
+			} else {
+				$("#sp2").html("<font color='red'>密码不能为空</font>")
+				return false;
+			}
+		}
+
+
+		//验证码不能为空
+		function fn3() {
+			var yanzen = $("#yanzen").val();
+			if (yanzen != null && yanzen != "") {
+				$("#sp3").html("<font color='green'>√</font>")
+				return true;
+			} else {
+				$("#sp3").html("<font color='red'>验证码不能为空</font>")
+				return false;
+			}
+		}
+  </script>
+
+</html>

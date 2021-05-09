@@ -1,0 +1,174 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery.min.js"></script>
+</head>
+<body>
+<h1 align="center">商家注册</h1>
+<form id="regForm" action="register" onsubmit="return checkAll()">
+    <table align="center">
+        <tr>
+         <td>注册用户名：<input type="text" name="merchantname" id="merchantname" onblur="checkName()" placeholder="请输入用户名">
+             <span id="sp1"></span>
+         </td>
+        </tr>
+        <tr>
+            <td>输入密码：<input type="text" id="merchantpwd" onblur="checkPwd()" placeholder="请输入密码">
+                <span id="sp2"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>确认密码：<input type="text" id="merchantpwd2" onblur="checkPwd2()" name="merchantpwd" placeholder="请输入确认密码">
+                <span id="sp3"></span>
+            </td>
+        </tr>
+    </table>
+    <br>
+    <!--头像：<img id="add_img" width="100px" height="100px" /><span id="sp4"></span>
+
+            <input type="file" name="image" id="uploadImg"/>
+            &lt;!&ndash; 隐藏域：用于向后台传值 &ndash;&gt;
+            <input type="hidden" id="hideImg" name="movieFile.filepath" />
+            &lt;!&ndash; 显示进度条的div &ndash;&gt;
+            <div id="fileQueue"></div><br>-->
+   <center><input type="submit" value="注册" ></center>
+</form>
+</body>
+<script>
+    var flag1=true;
+    //验证用户名是否存在
+    function checkName() {
+        var username= $("#merchantname").val();
+        if(username!=null &&username!=""){
+            $("#sp1").html("ok");
+            $.ajax({
+                url:"queryMerchantByName",
+                type:"post",
+                data:$("#regForm").serialize(),
+                dataType:"json",
+                async:false,
+                success:function (data) {
+                    if(data=="1"){
+                        $("#sp1").html("<font color='red'>用户名已存在请重新输入</font>");
+                        flag1=false;
+                    }
+                    if(data=="2"){
+                        $("#sp1").html("<font color='green'>用户名未注册可以使用</font>");
+                        flag1=true;
+                    }
+                },error:function () {
+                    alert("验证失败");
+                }
+            })
+        }else{
+            $("#sp1").html("<font color='red'>用户名不能为空</font>");
+            return false;
+        }
+    }
+    //验证密码
+    function checkPwd() {
+        var pwd=$("#merchantpwd").val();
+        if(pwd!=null && pwd!=""){
+            $("#sp2").html("<font color='green'>√</font>");
+            return true;
+
+        }else{
+            $("#sp2").html("<font color='red'>密码不能为空</font>");
+            return false;
+        }
+    }
+
+    //验证确认密码
+    function checkPwd2() {
+        var pwd=$("#merchantpwd").val();
+        var pwd2=$("#merchantpwd2").val();
+        if(pwd!=null && pwd!=""){
+            $("#sp2").html("");
+            if(pwd2!=null && pwd2!=""){
+                $("#sp3").html("");
+                if(pwd==pwd2){
+                    $("#sp2").html("<font color='green'>√</font>");
+                    $("#sp3").html("<font color='green'>√</font>");
+                    return true;
+                }else{
+                    $("#sp3").html("<font color='red'>俩次不一致</font>");
+                    return false;
+                }
+            }else{
+                $("#sp3").html("<font color='red'>确认密码不能为空</font>");
+                return false;
+            }
+        }else{
+            $("#sp2").html("<font color='red'>密码不能为空</font>");
+            return false;
+        }
+    }
+
+    //验证所有
+    function checkAll() {
+        //var flag0=checkName();
+        var flag2=checkPwd();
+        var flag3=checkPwd2();
+       /* var flag4=false;*/
+       /* var path=$("#hideImg").val();*/
+        /*if(path!=null &&path!=""){
+            $("#sp4").html("<font color='green'>√</font>");
+            flag4=true;
+        }else{
+            $("#sp4").html("<font color='red'>头像不能为空</font>");
+        }*/
+        if(flag1&&flag2&&flag3==true/*&&flag4*/){
+            alert("注册成功");
+            return true;
+        }
+        alert("失败")
+        /*alert("flag1"+flag1);*/
+        //alert("flag2"+flag2)
+        //alert("flag3"+flag3)
+        //alert("flag4"+flag4)
+        //alert(2);
+        return false;
+
+    }
+  /*  //文件上传插件uploadfiy
+    $("#uploadImg").uploadify({
+        //插件自带  不可忽略的参数flash插件
+        'swf': '<%=request.getContextPath()%>/js/uploadify/uploadify.swf',
+        //前台请求后台的url 不可忽略的参数
+        'uploader': '<%=request.getContextPath()%>/user/uploadUserImg.do',
+        //给div的进度条加背景 不可忽略
+        'queueID': 'fileQueue',
+        //上传文件文件名 跟file标签 name值 保持一致
+        'fileObjName' : 'image',
+        //给上传按钮设置文字
+        'buttonText': '上传图片',
+        //设置文件是否自动上传
+        'auto': true,
+        //可以同时选择多个文件 默认为true  不可忽略
+        'multi': true,
+        //上传后队列是否消失
+        'removeCompleted': true,
+        //允许上传的文件后缀 
+        'fileExt': '*.jpg;*.gif;*.png',
+        //
+        'cancelImg': '<%=request.getContextPath()%>/js/uploadify/uploadify-cancel.png',
+        //队列消失时间
+        'removeTimeout' : 1,
+        //上传文件的个数，项目中一共可以上传文件的个数
+        'uploadLimit':  -1,
+        'fileTypeExts': '*.jpg;*.png',
+        //成功回调函数 file：文件对象。data后台输出数据
+        'onUploadSuccess':function(file,data,response){
+            //alert(file.name+" 路径："+data)
+            var imgurl = "http://<%=request.getServerName()%>:<%=request.getServerPort()%><%=request.getContextPath()%>/"+data;
+            //图片回显， 预览
+            $("#add_img").attr("src",imgurl)
+            // 文本框 回填
+            $('#hideImg').val(imgurl);
+        }
+    });*/
+
+</script>
+</html>

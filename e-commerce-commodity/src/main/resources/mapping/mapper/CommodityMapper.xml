@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ytc.mapper.CommodityMapper">
+  <resultMap id="BaseResultMap" type="com.ytc.model.Commodity">
+    <id column="commodityid" jdbcType="INTEGER" property="commodityid" />
+    <result column="commodityname" jdbcType="VARCHAR" property="commodityname" />
+    <result column="commoditytypeid" jdbcType="INTEGER" property="commoditytypeid" />
+    <result column="commodityprice" jdbcType="DOUBLE" property="commodityprice" />
+    <result column="commodityshow" jdbcType="VARCHAR" property="commodityshow" />
+    <result column="commodityimgid" jdbcType="INTEGER" property="commodityimgid" />
+    <result column="commodityimgid1" jdbcType="INTEGER" property="commodityimgid1" />
+    <result column="commodityimgid2" jdbcType="INTEGER" property="commodityimgid2" />
+    <result column="merchantid" jdbcType="INTEGER" property="merchantid" />
+    <result column="commoditycount" jdbcType="INTEGER" property="commoditycount" />
+    <association property="type" javaType="com.ytc.model.Type">
+      <id column="typeid" property="typeid" jdbcType="INTEGER" />
+      <result column="typename" property="typename" jdbcType="VARCHAR" />
+    </association>
+    <association property="picture" javaType="com.ytc.model.Picture">
+      <id column="pictureid" property="pictureid" jdbcType="INTEGER" />
+      <result column="pictureurl" property="pictureurl" jdbcType="VARCHAR" />
+    </association>
+    <association property="picture1" javaType="com.ytc.model.Picture1">
+      <id column="pictureid1" property="pictureid1" jdbcType="INTEGER" />
+      <result column="pictureurl1" property="pictureurl1" jdbcType="VARCHAR" />
+    </association>
+    <association property="picture2" javaType="com.ytc.model.Picture2">
+      <id column="pictureid2" property="pictureid2" jdbcType="INTEGER" />
+      <result column="pictureurl2" property="pictureurl2" jdbcType="VARCHAR" />
+    </association>
+    <association property="merchant" javaType="com.ytc.model.Merchant">
+      <id column="merchantid" property="merchantid" jdbcType="INTEGER" />
+      <result column="merchantname" property="merchantname" jdbcType="VARCHAR" />
+      <result column="merchantpwd" property="merchantpwd" jdbcType="VARCHAR" />
+      <result column="jurisdictionid" property="jurisdictionid" jdbcType="INTEGER" />
+      <result column="balance" property="balance" jdbcType="INTEGER" />
+    </association>
+  </resultMap>
+  <sql id="tjwhere">
+    <where>
+      <if test="c.commodityname!=null and c.commodityname!=''">
+        and commodityname like '%${c.commodityname}%'
+      </if>
+      <if test="c.pricemin!=null and c.pricemin!=''">
+        and c.commodityprice &gt;=#{c.pricemin}
+      </if>
+      <if test="c.pricemax!=null and c.pricemax!=''">
+        and c.commodityprice &lt;=#{c.pricemax}
+      </if>
+    </where>
+  </sql>
+  <select id="querycomtest" resultMap="BaseResultMap">
+    select * from commodity c
+    left join picture pa on c.commodityimgid=pa.pictureid
+    left join picture1 pb on c.commodityimgid1=pb.pictureid1
+    left join picture2 pc on c.commodityimgid2=pc.pictureid2
+    left join `type` t on c.commoditytypeid=t.typeid
+    left join merchant m on c.merchantid=m.merchantid
+    where commodityid=#{id}
+  </select>
+  <select id="querycomcount" resultType="long">
+    select count(*) from commodity c
+    left join picture pa on c.commodityimgid=pa.pictureid
+    left join picture1 pb on c.commodityimgid1=pb.pictureid1
+    left join picture2 pc on c.commodityimgid2=pc.pictureid2
+    left join `type` t on c.commoditytypeid=t.typeid
+    left join merchant m on c.merchantid=m.merchantid
+    <include refid="tjwhere"></include>
+  </select>
+  <select id="qeurycom" resultMap="BaseResultMap">
+    select * from commodity c
+    left join picture pa on c.commodityimgid=pa.pictureid
+    left join picture1 pb on c.commodityimgid1=pb.pictureid1
+    left join picture2 pc on c.commodityimgid2=pc.pictureid2
+    left join `type` t on c.commoditytypeid=t.typeid
+    left join merchant m on c.merchantid=m.merchantid
+    <include refid="tjwhere"></include>
+    limit #{start},#{pagesize}
+  </select>
+  <update id="updatecom">
+    update commodity set commoditycount=commoditycount-1 WHERE commodityid=#{comid} and commoditycount &gt;=1
+  </update>
+
+  <select id="querylistById" resultMap="BaseResultMap" >
+  select * from commodity c
+left join picture p on c.commodityimgid=p.pictureid
+left join picture1 pp on c.commodityimgid1=pp.pictureid1
+left join picture2 ppp on c.commodityimgid2=ppp.pictureid2
+left join type t on c.commoditytypeid=t.typeid
+left join merchant m on c.merchantid=m.merchantid
+WHERE m.merchantid=#{id}
+limit #{start},#{pagesize}
+  </select>
+  <select id="querycomcountbyid" resultType="long" >
+  select count(*) from commodity c
+left join picture p on c.commodityimgid=p.pictureid
+left join picture1 pp on c.commodityimgid1=pp.pictureid1
+left join picture2 ppp on c.commodityimgid2=ppp.pictureid2
+left join type t on c.commoditytypeid=t.typeid
+left join merchant m on c.merchantid=m.merchantid
+WHERE m.merchantid=#{merchantid}
+  </select>
+  <delete id="delsCommodity">
+    delete from commodity where commodityid in
+    <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </delete>
+  <insert id="addCommodity">
+
+    insert into commodity values (commodityid,#{c.commodityname},#{c.type.typeid},#{c.commodityprice},#{c.commodityshow},
+    #{c.picture.pictureid},#{c.picture1.pictureid1},#{c.picture2.pictureid2},#{c.merchant.merchantid},#{c.commoditycount})
+  </insert>
+</mapper>

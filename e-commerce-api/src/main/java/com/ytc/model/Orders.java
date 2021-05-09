@@ -7,31 +7,68 @@ public class Orders implements Serializable {
     private static final long serialVersionUID = -607476880015938139L;
     private String orderid;
 
-    private Integer commodityid;
-
     private Integer userid;
 
-    private Date createTime;
+    private String createTime;
 
     private Integer status;
 
-    private Commodity commodity;
-    private User user;
+    private Double totulprice;
 
-    public Date getCreateTime() {
+    private Integer commodityid;
+
+    private Commodity commodity;
+
+    private User user;
+    private Integer adressid;
+    private Adress adress;
+    private Merchant merchant;
+    @Override
+    public String toString() {
+        return "Orders{" +
+                "orderid='" + orderid + '\'' +
+                ", userid=" + userid +
+                ", createTime='" + createTime + '\'' +
+                ", status=" + status +
+                ", totulprice=" + totulprice +
+                ", commodityid=" + commodityid +
+                ", commodity=" + commodity +
+                ", user=" + user +
+                ", adressid=" + adressid +
+                ", adress=" + adress +
+                '}';
+    }
+
+    public Double getTotulprice() {
+        return totulprice;
+    }
+
+    public void setTotulprice(Double totulprice) {
+        this.totulprice = totulprice;
+    }
+
+    public Adress getAdress() {
+        return adress;
+    }
+
+    public void setAdress(Adress adress) {
+        this.adress = adress;
+    }
+
+    public Integer getCommodityid() {
+        return commodityid;
+    }
+
+    public void setCommodityid(Integer commodityid) {
+        this.commodityid = commodityid;
+    }
+
+    public String getCreateTime() {
         return createTime;
     }
 
-    public void setCreateTime(Date createTime) {
+    public void setCreateTime(String createTime) {
         this.createTime = createTime;
-    }
-
-    public Integer getStatus() {
-        return status;
-    }
-
-    public void setStatus(Integer status) {
-        this.status = status;
     }
 
     public Commodity getCommodity() {
@@ -58,14 +95,6 @@ public class Orders implements Serializable {
         this.orderid = orderid == null ? null : orderid.trim();
     }
 
-    public Integer getCommodityid() {
-        return commodityid;
-    }
-
-    public void setCommodityid(Integer commodityid) {
-        this.commodityid = commodityid;
-    }
-
     public Integer getUserid() {
         return userid;
     }
@@ -73,4 +102,21 @@ public class Orders implements Serializable {
     public void setUserid(Integer userid) {
         this.userid = userid;
     }
+
+    public Integer getAdressid() {
+        return adressid;
+    }
+
+    public void setAdressid(Integer adressid) {
+        this.adressid = adressid;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
 }

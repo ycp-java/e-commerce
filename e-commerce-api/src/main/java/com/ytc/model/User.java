@@ -13,8 +13,19 @@ public class User implements Serializable {
     private Integer jurisdictionid;
 
     private Jurisdiction jurisdiction;
+    private Adress address;
 
     private Integer adressid;
+
+    private String paypwd;
+
+    public Adress getAddress() {
+        return address;
+    }
+
+    public void setAddress(Adress address) {
+        this.address = address;
+    }
 
     public Integer getAdressid() {
         return adressid;
@@ -60,7 +71,16 @@ public class User implements Serializable {
         return jurisdictionid;
     }
 
+
     public void setJurisdictionid(Integer jurisdictionid) {
         this.jurisdictionid = jurisdictionid;
+    }
+
+    public String getPaypwd() {
+        return paypwd;
+    }
+
+    public void setPaypwd(String paypwd) {
+        this.paypwd = paypwd;
     }
 }

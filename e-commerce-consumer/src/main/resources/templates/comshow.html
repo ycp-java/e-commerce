@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery.min.js"></script>
+<body>
+<input type="button" th:onclick="checktro()" value="查看购物车">
+<table border="0">
+    <tr>
+        <td width="100px" height="100px">封面</td>
+        <td width="100px" height="100px">商品名称</td>
+        <td width="100px" height="100px">商品类型</td>
+        <td width="100px" height="100px">价格</td>
+        <td width="100px" height="100px">介绍</td>
+        <td width="100px" height="100px">商家名称</td>
+        <td width="100px" height="100px">商品详情</td>
+    </tr>
+    <tr th:each="p:${page.list}">
+        <td><img th:src="${p.picture.pictureurl}" alt="图片加载失败"></td>
+        <td th:text="${p.commodityname}" width="100px" height="100px"></td>
+        <td th:text="${p.type.typename}" width="100px" height="100px"></td>
+        <td th:text="${p.commodityprice}" width="100px" height="100px"></td>
+        <td th:text="${p.commodityshow}" width="100px" height="100px"></td>
+        <td th:text="${p.merchant.merchantname}" width="100px" height="100px"></td>
+        <td width="100px" height="100px"><a href="#" th:onclick="xiangqing([[${p.commodityid}]])">查看详情</a></td>
+    </tr>
+</table>
+<div th:replace="page::html"></div>
+</body>
+<script>
+    function checktro() {
+        location.href="/trolley/totrolley";
+    }
+    function xiangqing(id) {
+
+        location.href="/trolley/querycomtest?id="+id;
+    }
+
+</script>
+</html>

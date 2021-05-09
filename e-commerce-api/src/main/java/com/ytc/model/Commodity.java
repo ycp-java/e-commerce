@@ -22,11 +22,64 @@ public class Commodity implements Serializable {
 
     private Integer merchantid;
 
+    private Integer commoditycount;
+
     private Merchant merchant;
     private Type type;
     private Picture picture;
     private Picture1 picture1;
     private Picture2 picture2;
+
+    //dto
+    private Integer pricemax;
+    private Integer pricemin;
+
+    @Override
+    public String toString() {
+        return "Commodity{" +
+                "commodityid=" + commodityid +
+                ", commodityname='" + commodityname + '\'' +
+                ", commoditytypeid=" + commoditytypeid +
+                ", commodityprice=" + commodityprice +
+                ", commodityshow='" + commodityshow + '\'' +
+                ", commodityimgid=" + commodityimgid +
+                ", commodityimgid1=" + commodityimgid1 +
+                ", commodityimgid2=" + commodityimgid2 +
+                ", merchantid=" + merchantid +
+                ", commoditycount=" + commoditycount +
+                ", merchant=" + merchant +
+                ", type=" + type +
+                ", picture=" + picture +
+                ", picture1=" + picture1 +
+                ", picture2=" + picture2 +
+                ", pricemax=" + pricemax +
+                ", pricemin=" + pricemin +
+                '}';
+    }
+
+    public Integer getPricemax() {
+        return pricemax;
+    }
+
+    public void setPricemax(Integer pricemax) {
+        this.pricemax = pricemax;
+    }
+
+    public Integer getPricemin() {
+        return pricemin;
+    }
+
+    public void setPricemin(Integer pricemin) {
+        this.pricemin = pricemin;
+    }
+
+    public Integer getCommoditycount() {
+        return commoditycount;
+    }
+
+    public void setCommoditycount(Integer commoditycount) {
+        this.commoditycount = commoditycount;
+    }
 
     public Integer getMerchantid() {
         return merchantid;
@@ -139,4 +192,5 @@ public class Commodity implements Serializable {
     public void setCommodityimgid2(Integer commodityimgid2) {
         this.commodityimgid2 = commodityimgid2;
     }
+
 }

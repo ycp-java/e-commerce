@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ytc.mapper.OrdersMapper" >
+  <resultMap id="BaseResultMap" type="com.ytc.model.Orders" >
+    <id column="orderid" property="orderid" jdbcType="VARCHAR" />
+    <result column="commodityi" property="commodityid" jdbcType="INTEGER" />
+    <result column="useri" property="userid" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="adressi" property="adressid" jdbcType="INTEGER" />
+    <result column="totulprice" property="totulprice" javaType="DOUBLE" />
+    <association property="commodity" javaType="com.ytc.model.Commodity">
+        <id column="commodityid" jdbcType="INTEGER" property="commodityid" />
+        <result column="commodityname" jdbcType="VARCHAR" property="commodityname" />
+        <result column="commoditytypeid" jdbcType="INTEGER" property="commoditytypeid" />
+        <result column="commodityprice" jdbcType="DOUBLE" property="commodityprice" />
+        <result column="commodityshow" jdbcType="VARCHAR" property="commodityshow" />
+        <result column="commodityimgid" jdbcType="INTEGER" property="commodityimgid" />
+        <result column="commodityimgid1" jdbcType="INTEGER" property="commodityimgid1" />
+        <result column="commodityimgid2" jdbcType="INTEGER" property="commodityimgid2" />
+        <result column="merchantid" jdbcType="INTEGER" property="merchantid" />
+        <result column="commoditycount" jdbcType="INTEGER" property="commoditycount" />
+    </association>
+      <association property="adress" javaType="com.ytc.model.Adress">
+          <id column="adressid" property="adressid" jdbcType="INTEGER" />
+          <result column="adressname" property="adressname" jdbcType="VARCHAR" />
+          <result column="userid" property="userid" jdbcType="INTEGER" />
+      </association>
+      <association property="user" javaType="com.ytc.model.User">
+      <id column="userid" property="userid" jdbcType="INTEGER" />
+      <result column="username" property="username" jdbcType="VARCHAR" />
+      <result column="userpwd" property="userpwd" jdbcType="VARCHAR" />
+      <result column="jurisdictionid" property="jurisdictionid" jdbcType="INTEGER" />
+      <result column="paypwd" property="paypwd" jdbcType="VARCHAR" />
+       </association>
+      <association property="merchant" javaType="com.ytc.model.Merchant">
+          <id column="merchantid" property="merchantid" jdbcType="INTEGER" />
+          <result column="merchantname" property="merchantname" jdbcType="VARCHAR" />
+          <result column="merchantpwd" property="merchantpwd" jdbcType="VARCHAR" />
+          <result column="jurisdictionid" property="jurisdictionid" jdbcType="INTEGER" />
+          <result column="balance" property="balance" jdbcType="INTEGER" />
+      </association>
+  </resultMap>
+    <select id="ordercount" resultType="long">
+        select count(*) from orders o
+left join commodity c ON o.commodityi = c.commodityid
+left join adress a on o.adressi = a.adressid
+left join `user` u on o.useri = u.userid
+where o.useri=#{userid}
+
+    </select>
+    <select id="orderlist" resultMap="BaseResultMap">
+        select * from orders o
+left join commodity c ON o.commodityi = c.commodityid
+left join adress a on o.adressi = a.adressid
+left join `user` u on o.useri = u.userid
+where o.useri=#{id}
+limit #{start},#{pagesize}
+    </select>
+ <insert id="insertorder">
+   insert into orders values (#{o.orderid},#{o.commodityid},#{o.userid},#{o.createTime},#{o.status},#{o.adressid},#{o.totulprice})
+ </insert>
+    <update id="zhifu">
+       update orders set `status`=1 where orderid=#{orderid}
+    </update>
+    <select id="querylistorder" resultMap="BaseResultMap">
+        SELECT * from merchant m left join (
+SELECT * from orders o
+left join commodity c on o.commodityi=c.commodityid
+)t on m.merchantid=t.merchantid
+left join `user` u on t.useri=u.userid
+WHERE m.merchantid=#{merchantid}
+    </select>
+</mapper>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery.min.js"></script>
+<body>
+<table border="0" width="1000">
+    <h2>我的购物车</h2>
+    <tr>
+        <td width="100px" height="100px">全选<input type="checkbox" id="quanxuan" th:onclick="quanxuan()" checked="checked"></td>
+        <td width="100px" height="100px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商品名称</td>
+        <td width="100px" height="100px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;封面</td>
+        <td width="100px" height="100px">小计</td>
+        <td width="100px" height="100px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;购买数量</td>
+    </tr>
+    <tr th:each="p:${page.list}">
+        <td><input type="checkbox" name="id" th:value="${p.comid}" onchange="jisuan()">
+        </td>
+        <td th:text="${p.comname}"></td>
+        <td><img th:src="${p.imgurl}" alt="加载失败"></td>
+        <td th:text="${p.totleprice}">
+        </td>
+        <td>
+            <input type="hidden" th:id="t+${p.comid}" th:value="${p.totleprice}" >
+            <input type="button" th:onclick="jian([[${p.comid}]])" value="-">
+            <input type="text" th:id="${p.comid}" th:value="${p.buynum}" th:onchange="fn1([[${p.buynum}]],[[${p.comid}]])">
+            <input type="button" th:onclick="jia([[${p.comid}]])" value="+">
+        </td>
+    </tr>
+</table>
+<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<div th:replace="page::html"></div>
+<br>
+<br>
+<p align="right" >总计金额为：<input type="text" style="width: 65px;height: 10px" id="totulprice" readonly="readonly"></p>
+<p align="right" >请选择收货地址：
+<select id="adress">
+    <option th:each="a:${adr}" th:value="${a.adressid}" th:text="${a.adressname}"></option>
+</select></p>
+<p align="right" ><input type="button"  value="确认购买" th:onclick="dls()"></p>
+</body>
+<script>
+    $(function () {
+        quanxuan();
+        var price=0;
+        $("input[name='id']").each(function (i) {
+            if ($(this).prop("checked")){
+                var id=$(this).val();
+                price+=parseFloat($("#t"+id).val());
+            }
+        })
+        $("#totulprice").val(price);
+    })
+    function jisuan() {
+        var price=0;
+        $("input[name='id']").each(function (i) {
+            if ($(this).prop("checked")){
+                var id=$(this).val();
+                price+=parseFloat($("#t"+id).val());
+            }
+        })
+        $("#totulprice").val(price);
+    }
+    function quanxuan() {
+        if($("#quanxuan").prop("checked")) {
+            $("input[name='id']").prop('checked',true);
+        }else {
+            $("input[name='id']").prop('checked',false);
+        }
+    }
+    function dls() {
+        var adress=$("#adress").val();
+        var ids = "";
+        var price=0;
+        var imgurl="";
+        var comname=""
+        $("input[name='id']").each(function (i) {
+            if ($(this).prop("checked")) {
+
+                ids+=","+$(this).val();
+
+                var id=$(this).val();
+
+                price+=parseFloat($("#t"+id).val());
+            }
+
+        })
+
+        if (ids!=null&&ids!="") {
+            var idss=ids.substring(1);
+            $.ajax({
+                url:"/trolley/deltrolley",
+                type:"get",
+                data:{"ids":idss,"toprice":price,"adress":adress},
+                success: function (data) {
+                    alert("支付");
+                    location.href="/goAlipay?price="+price;
+                }, error: function () {
+                    alert("失败")
+                }
+
+            })
+        }
+    }
+    function jia(id){
+        $("#"+id).val($("#"+id).val()-(-1));
+
+    }
+
+    function jian(id) {
+        if($("#"+id).val()>1){
+            var a=$("#"+id).val()-1;
+            $("#"+id).val(a);
+        }else {
+            alert("不能小于一");
+        }
+    }
+    function fn1(buymun,id) {
+        if($("#"+id).val()<1){
+            alert("不能小于一");
+            $("#"+id).val(buymun);
+        }
+
+
+    }
+</script>
+</html>

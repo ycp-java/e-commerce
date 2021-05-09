@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>支付宝商家中心-国内领先的第三方支付和金融服务平台-首页</title>
+    <meta charset="utf-8" />
+    <meta name="keywords" content="" />
+    <meta name="description" content="" />
+    <meta name="data-aspm" content="a226"/>
+    <meta name="renderer" content="webkit" />
+    <meta name="force-rendering" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <link rel="icon" href="https://img.alicdn.com/tfs/TB1qEwuzrj1gK0jSZFOXXc7GpXa-32-32.ico" type="image/x-icon" />
+    <link rel="shortcut icon" href="https://img.alicdn.com/tfs/TB1qEwuzrj1gK0jSZFOXXc7GpXa-32-32.ico" type="image/x-icon" />
+    <script src="https://gw.alipayobjects.com/a/mrchportalweb/common-0ccb1c3ed5979e1bb587.js"></script>
+
+    <link href="https://a.alipayobjects.com" rel="dns-prefetch" />
+    <link href="https://app.alipay.com" rel="dns-prefetch" />
+    <link href="https://my.alipay.com" rel="dns-prefetch" />
+    <link href="https://lab.alipay.com" rel="dns-prefetch" />
+    <link href="https://cashier.alipay.com" rel="dns-prefetch" />
+    <link href="https://financeprod.alipay.com" rel="dns-prefetch" />
+    <link href="https://shenghuo.alipay.com" rel="dns-prefetch" />
+
+
+    <link charset="utf-8" rel="stylesheet" type="text/css" href="https://gw.alipayobjects.com/a/mrchportalweb/app_views_user_home_html_js-858a7b881825d02cf395.css" />
+    <script>
+        window._to = {
+            autoLogPv: false,
+            autoExpo: true,
+        }
+        window.navCode = 'ent.merchantService'
+    </script>
+    <style>font.indents{padding-left: 50em}</style>
+    <style type="text/css">
+        @font-face {
+            font-family: "AlipayNumber";
+            src: url("https://gw.alipayobjects.com/as/g/antui/antui-static/1.0.3/fonts/AlipayNumber-Regular.ttf") format("truetype");
+        }
+    </style>
+    <link charset="utf-8" rel="stylesheet" type="text/css" href="https://gw.alipayobjects.com/a/mrchportalweb/app_views_user_home_html_css-2dfa0972b1aa79d05fc6.css" />
+    <link rel="stylesheet" href="../js/kindeditor-4.1.10/themes/default/default.css" />
+    <link rel="stylesheet" href="../js/uploadify/uploadify.css">
+</head>
+<script src="../js/jquery.min.js"></script>
+<body>
+<script>
+    console.log('顶部菜单人群灰度:', 'false', 'menuKey灰度:', 'true', '当前menuKey:', 'ent.merchantService')
+</script>
+
+<!-- FD:morderprod-sp:morderprod/sp/nav/head/newhead/template/merchant.vm:START --><script>
+    console.log('加载商家中心导航')
+    // 隐藏顶部黑条
+    var jHeader = document.getElementById('J_header')
+    if (jHeader) {
+        jHeader.style.display = 'none'
+    }
+
+    // 新版菜单在老tite引入，需要tile内部透传菜单标示
+    window.menuTitle = 'ent.merchantService'
+</script>
+<link href="https://gw.alipayobjects.com/a/g/merchantCenter/merchant-center-nav/0.0.19/nav.css" rel="stylesheet" text="text/css" />
+<script src="https://gw.alipayobjects.com/a/g/merchantCenter/merchant-center-nav/0.0.19/nav.js"></script>
+
+<script src="https://mrchportalweb.alipay.com/common/login?&_output_charset=utf-8&callback=showNavigator"></script>
+
+<!-- FD:morderprod-sp:morderprod/sp/nav/head/newhead/template/merchant.vm:END -->
+<script type="text/javascript" src="https://s9.cnzz.com/z_stat.php?id=1278858046&web_id=1278858046" async defer>
+
+</script><!-- FD:morderprod-sp:morderprod/sp/nav/head/newhead/topTile.vm:END -->
+<div id="container-wrapper" class="container-box clearfix">
+    <div class="col-right-wrapper main-wrapper-through">
+    </div>
+</div>
+<div class="common-nav-wrapper ">
+    <font size="5" color="#f0f8ff" >
+        <center>商家管理中心</center>
+    </font>
+</div>
+</div>
+<div class="tree-horizontal-row" style="height: 308px; overflow: hidden;">
+    <div style="width: 344px; overflow: hidden;">
+        <div class="home-balance" data-aspm="c23479" data-aspm-expo="true">
+            <div class="home-balance-head">
+                <div class="home-balance-head-title">
+                    <span>我的信息</span>
+                    <i class="iconfont icon-zhengyan1 cursor-pointer iconfont icon-biyansvg" data-aspm-click="c23479.d43690" style="color: rgb(139, 147, 167);">
+                    </i>
+                </div>
+                <div class="home-balance-head-link">
+                    <a data-aspm-click="c23479.d43692"><!-- react-text: 50 --><!-- /react-text -->
+                        <i class="iconfont icon-jinru"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="home-balance-body">
+                <div class="home-balance-body-balance">
+                    <div style="display: flex;">
+                        <div class="home-common-amount-title">
+                            <span class="home-common-amount-title-text">店铺名称</span>
+                        </div>
+                    </div>
+                    <div class="home-balance-body-balance-money"><span th:text="${mer.merchantname}"></span>的店铺</div>
+                </div>
+            </div>
+            <!--<div class="home-balance-footer">
+                <button type="button" class="ant-btn home-balance-footer-button ant-btn-primary">
+                    <span>充 值</span>
+                </button>
+                <button type="button" class="ant-btn home-balance-footer-button ant-btn-primary">
+                    <span>转 账</span>
+                </button><button type="button" class="ant-btn home-balance-footer-button ant-btn-primary">
+                <span>提 现</span></button>
+            </div>-->
+            <div class="home-balance-body">
+                优质商家
+            </div>
+            <br>
+            <br>
+            <button type="button"  th:onclick="fanhui()" class="ant-btn home-balance-footer-button ant-btn-primary">
+                <span>商家中心</span></button>
+        </div>
+    </div>
+    <div style="min-width: 512px; flex: 1 1 0%; overflow: hidden;">
+        <div class="home-report" data-aspm="c23480" data-aspm-expo="true">
+            <div class="home-report-head">
+                <div class="home-report-head-title">
+                    <div class="home-report-head-title-current home-report-head-title-tab" data-aspm-click="c23480.d43696">
+                        <span data-aspm="c23480.d43696" data-aspm-expo="true">商品库存</span>
+                    </div>
+                </div>
+                <div class="home-report-head-link">
+                    <a href="https://mbillexprod.alipay.com/enterprise/tradeListQuery.htm" data-aspm-click="c23480.d43703"><!-- react-text: 82 --><!-- /react-text -->
+                        <i class="iconfont icon-jinru"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="home-report-body">
+                <div class="home-report-body-amount">
+                </div>
+                <div>
+                    <div style="position:relative;">
+                       <!-- <canvas id="canvas_1" width="919" height="172" style="width: 919px; height: 172px; cursor: default;">
+                        </canvas>-->
+                        <table width="1000">
+                            <tr>
+                                <td><input type="checkbox" id="check"></td>
+                                <td>商品名称</td>
+                                <td>商品类型</td>
+                                <td>商品价格</td>
+                                <td>商品介绍</td>
+                                <td>图片</td>
+                                <td>图片1</td>
+                                <td>图片2</td>
+                                <td>商品数量</td>
+                            </tr>
+                            <tr th:each="l:${page.list}">
+                                <td><input id="commodityid" name="commodityid" type="checkbox" th:value="${l.commodityid}"></td>
+                                <!--<td><input thtype="checkbox" name="moveid" value="${l.}"></td>-->
+                                <td th:text="${l.commodityname}">2.41</td>
+                                <td th:text="${l.type.typename}">yes</td>
+                                <td th:text="${l.commodityprice}">yes</td>
+                                <td th:utext="${l.commodityshow}"></td>
+                                <td><img th:src="${l.picture.pictureurl}" width="40px" height="40px"></td>
+                                <td><img th:src="${l.picture1.pictureurl1}"  width="40px" height="40px"></td>
+                                <td><img th:src="${l.picture2.pictureurl2}"  width="40px" height="40px"></td>
+                                <td th:text="${l.commoditycount}">yes</td>
+                            </tr>
+                        </table>
+                        <div th:replace="page::html"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="home-banner-image">
+    <a target="_blank" rel="noopener noreferrer" href="https://bizfundprod.alipay.com/payment/quickbatch/index.htm?chInfo=ch_sjzx__chsub_sybanner&amp;__webview_options__=bizScenario%3DSHZX_BANNER.19244.313135.1310423618680782848&amp;dtLogMonitor=__ch__adid_1310423618680782848__sid__rid__wid" data-aspm-param="" data-aspm-click="d44133_0" style="background-image: url(&quot;https://gw.alipayobjects.com/zos/promocreative/CKWkKjMKpwZpGMCXLGYd.png&quot;);">
+    </a>
+</div>
+<div class="home-recommend">
+    <div class="home-common-plaque">
+        <div class="ant-tabs-content ant-tabs-content-animated">
+            <div class="home-report-head-title-current home-report-head-title-tab" >
+                <span data-aspm="c23480.d43696" data-aspm-expo="true">商品管理</span>
+            </div>
+            <p align="right">
+                <button type="button"  onclick="add()" class="ant-btn home-balance-footer-button ant-btn-primary">
+                <span>新增</span>
+            </button>
+            <button type="button"  onclick="dels()" class="ant-btn home-balance-footer-button ant-btn-primary">
+                <span>删除</span>
+            </button>
+                <button type="button"  onclick="up()" class="ant-btn home-balance-footer-button ant-btn-primary">
+                    <span>上架</span>
+                </button>
+                <button type="button"  onclick="down()" class="ant-btn home-balance-footer-button ant-btn-primary">
+                    <span>下架</span>
+                </button>
+            </p>
+        </div>
+    </div>
+</div>
+<script>
+    function add(){
+        location.href="toadd"
+    }
+    $("#check").click(function () {
+        $("input[name='commodityid']").prop("checked",this.checked)
+    })
+    function dels(){
+        var ids="";
+        $("input[name='commodityid']").each(function (i) {
+            if($(this).prop("checked")){
+                ids+=","+$(this).val();
+            }
+        })
+        if(ids!=null && ids!=""){
+            var idss=ids.substring(1);
+            $.ajax({
+                url:"delsCommodity",
+                data:{"ids":idss},
+                type:"post",
+                success:function (data) {
+                    alert("删除成功");
+                    location.href="toshanghu";
+                },error:function () {
+                    alert("删除失败");
+                }
+            })
+        }else{
+            alert("请选择要删除的项");
+        }
+    }
+    function up(){
+        alert("ok")
+    }
+    function down(){
+        alert("ok")
+    }
+    function fanhui() {
+        location.href="payshow";
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<a href="javaScript:serach(1)">首页</a>
+
+<a th:if="${page.cpage==1}">上一页</a>
+
+<a th:if="${page.cpage>1}"><a th:href="'javaScript:serach('+${page.cpage+(-1)}+')'">上一页</a></a>
+
+<a th:text="${page.cpage}"/>/<a th:text="${page.totalPage}"/>
+
+<a th:if="${page.cpage==page.totalPage}">下一页</a>
+
+<a th:if="${page.cpage<page.totalPage }"><a th:href="'javaScript:serach('+${page.cpage+1}+')'">下一页</a></a>
+
+<a th:href="'javaScript:serach('+${page.totalPage}+')'">尾页</a>
+
+</body>
+
+</html>

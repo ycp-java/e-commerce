@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery.min.js"></script>
+<body>
+<form id="comshow">
+    商品名称<input type="text" name="commodityname"><br>
+    价格<input type="text" name="pricemin"> -->  <input type="text" name="pricemax"><br>
+    <input type="button" onclick="serach(1)" value="查询">
+    <input type="hidden" name="cpage" id="cpage">
+</form>
+<div id="divvv"></div>
+</body>
+<script>
+    $(function () {
+        serach(1);
+    })
+
+    function serach(cpage) {
+        $("#cpage").val(cpage);
+        $.ajax({
+            url:"/user/comshow",
+            type:"get",
+            dataType:"html",
+            data:$("#comshow").serialize(),
+            success:function (data) {
+                $("#divvv").html(data);
+            },error:function () {
+                alert("失败");
+            }
+        })
+    }
+</script>
+
+</html>

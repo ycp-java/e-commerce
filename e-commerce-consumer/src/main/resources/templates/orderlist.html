@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery.min.js"></script>
+<body>
+<center>
+<table border="0">
+    <tr>
+        <td width="100px" height="100px">订单号</td>
+        <td width="100px" height="100px">商品名称</td>
+        <td width="100px" height="100px">送货地址</td>
+        <td width="100px" height="100px">创建订单时间</td>
+        <td width="100px" height="100px">订单状态</td>
+        <td width="100px" height="100px">操作</td>
+    </tr>
+    <tr th:each="o:${page.list}">
+        <td th:text="${o.orderid}">订单号</td>
+        <td th:text="${o.commodity.commodityname}">商品名称</td>
+        <td th:text="${o.adress.adressname}">送货地址</td>
+        <td th:text="${o.createTime}">创建订单时间</td>
+        <td th:text="${o.status}">订单状态</td>
+        <td th:text="${o.totulprice}">支付金额</td>
+        <td><input type="button" onclick="zhifu([[${o.orderid}]])" value="支付"></td>
+    </tr>
+</table>
+<div th:replace="page::html"></div></center>
+</body>
+<script>
+    function zhifu(orderid) {
+         $.ajax({
+             url:"trolley/zhifu",
+             type:"post",
+             data:{"orderid":orderid},
+             success:function (data) {
+                alert("支付成功")
+             },error:function () {
+                alert("支付失败")
+             }
+         })
+    }
+</script>
+</html>

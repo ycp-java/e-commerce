@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery.min.js"></script>
+<body>
+<form id="shanghu">
+    <input type="hidden" name="cpage" id="cpage">
+</form>
+<div id="divv"></div>
+</body>
+<script>
+    $(function (){
+        serach(1);
+    })
+    function serach(cpage){
+
+      $("#cpage").val(cpage);
+        $.ajax({
+            url:"/shanghu",
+            type:"get",
+            data:$("#shanghu").serialize(),
+            dataType:"html",
+            success:function (data){
+                $("#divv").html(data);
+            },error:function (){
+                alert("失败")
+            }
+        })
+    }
+</script>
+</html>

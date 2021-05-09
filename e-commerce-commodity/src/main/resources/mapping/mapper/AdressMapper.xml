@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ytc.mapper.AdressMapper" >
+  <resultMap id="BaseResultMap" type="com.ytc.model.Adress" >
+    <id column="adressid" property="adressid" jdbcType="INTEGER" />
+    <result column="adressname" property="adressname" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="INTEGER" />
+  </resultMap>
+<select id="selectadr" resultMap="BaseResultMap">
+select * from adress where userid=#{userid}
+</select>
+</mapper>

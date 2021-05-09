@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<script src="../js/jquery.min.js"></script>
+<body>
+<table align="center" width="200" >
+    <tr>
+        <td><font color="orange"><h1>淘宝网</h1></font></td>
+    </tr>
+    <tr>
+        <td><input type="button" value="用户登录" onclick="yonghulogin()"></td>
+    </tr>
+    <tr>
+        <td><input type="button" value="商家登陆" onclick="login()" ></td>
+    </tr>
+
+</table>
+</body>
+<script>
+    function login() {
+        location.href="payzhuce";
+    }
+    function yonghulogin(){
+        location.href="login"
+    }
+</script>
+</html>

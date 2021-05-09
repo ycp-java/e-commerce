@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ytc.mapper.Picture1Mapper" >
+  <resultMap id="BaseResultMap" type="com.ytc.model.Picture1" >
+    <id column="pictureid1" property="pictureid1" jdbcType="INTEGER" />
+    <result column="pictureurl1" property="pictureurl1" jdbcType="VARCHAR" />
+  </resultMap>
+  <insert id="addpicture" >
+    insert into picture1 values(pictureid1,#{c.picture1.pictureurl1})
+    <selectKey keyProperty="c.picture1.pictureid1" order="AFTER" resultType="int">
+      select last_insert_id()
+    </selectKey>
+  </insert>
+</mapper>

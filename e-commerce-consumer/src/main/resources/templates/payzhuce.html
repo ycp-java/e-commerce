@@ -1,0 +1,97 @@
+<!DOCTYPE html >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../js/jquery.min.js"></script>
+</head>
+<body>
+<h2 align="center">商家登陆</h2>
+<form id="loginForm" >
+    <table align="center">
+        <tr>
+            <td> 用户名：<input type="text" name="merchantname" id="merchantname" onblur="checkUserName()">
+                <span id="sp1"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>用户密码：<input type="text" name="merchantpwd" id="merchantpwd" onblur="checkPwd()" >
+                <span id="sp2"></span>
+            </td>
+        </tr>
+    </table>
+<br>
+<center><input type="button" value="商家登录" onclick="login()">
+<input type="button" value="免费注册" onclick="regiter()"></center>
+</form>
+</body>
+<script>
+function checkUserName(){
+    var username=$("#merchantname").val();
+    if(username!=null && username!=""){
+        $("#sp1").html("ok");
+        return true;
+    }else{
+        $("#sp1").html("<font color='red'>用户名不能为空</font>");
+        return false;
+    }
+}
+function checkPwd() {
+    var userpwd = $("#merchantpwd").val();
+    if(userpwd!=null && userpwd!=""){
+        $("#sp2").html("ok");
+        return true;
+    }else{
+        $("#sp2").html("<font color='red'>密码不能为空</font>");
+        return false;
+    }
+}
+function login() {
+    var username = $("#merchantname").val();
+    var userpsd = $("#merchantpwd").val();
+    /*var imgcode2 = $("#imgcode2").val();*/
+   /* if(imgcode2!=null &&imgcode2!="")*/
+        if(username!=null && username!=""){
+            $("#sp1").html("ok");
+            if(userpsd!=null && userpsd!=""){
+                $("#sp2").html("ok");
+                $.ajax({
+                    url:"/tologin",
+                    type:"post",
+                    data:$("#loginForm").serialize(),
+                    dataType:"json",
+                    success:function (data) {
+                        /*if(data=="1"){
+                            $("#sp3").html("<font color='red'>验证码错误</font>");
+                        }*/
+                        if(data=="2"){
+                            $("#sp1").html("<font color='red'>用户名错误</font>");
+                        }
+                        if(data=="3"){
+                            $("#sp2").html("<font color='red'>密码错误</font>");
+                        }
+                        if(data=="4"){
+                            location.href="payshow";
+                        }
+                    },error:function () {
+                        alert("登录失败");
+                    }
+                })
+            }else{
+                $("#sp2").html("<font color='red'>用户密码不能为空</font>");
+                return false;
+            }
+        }else{
+            $("#sp1").html("<font color='red'>用户名不能为空</font>");
+            return false;
+        }
+    /*else {
+        $("#sp3").html("<font color='red'>验证码不能为空</font>");
+        return false;
+    }*/
+}
+function regiter() {
+    location.href="/toReg";
+}
+</script>
+</html>

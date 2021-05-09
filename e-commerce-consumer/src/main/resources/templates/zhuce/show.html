@@ -1,0 +1,220 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="renderer" content="webkit|ie-stand|ie-comp" />
+<title>
+
+   
+   
+   
+                                          用户注册
+   
+
+</title>
+<link rel="stylesheet" href="https://w1.hoopchina.com.cn/passport-prod/static/pc/css/reset.css?v=2020042301">
+<link rel="stylesheet" href="https://w1.hoopchina.com.cn/passport-prod/static/pc/css/passport.css?v=2020042301">
+<link rel="stylesheet"    href="https://w1.hoopchina.com.cn/passport-prod/static/pc/css/passport-index.css?v=2020042301">
+
+<script src="https://w1.hoopchina.com.cn/passport-prod/static/pc/js/lib/MD5.js"></script>
+<script src="https://w1.hoopchina.com.cn/passport-prod/static/pc/js/cookie.js"></script>
+
+<!-- 同盾接入测试  -->
+
+<!-- 阿里滑块处理  -->
+
+
+
+</head>
+<script src="../js/jquery.min.js"></script>
+<body class="">
+    <div class="bg-img">
+        <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1602844822519&di=8ec289f80e2f2f250286ddbf3878984e&imgtype=0&src=http%3A%2F%2Fpic1.win4000.com%2Fwallpaper%2Fb%2F58eaf52369c61.jpg" alt="">
+    </div>
+    <div class="user-login">
+	        <div class="back-title">
+	            <a th:href="@{/login}"> <b><</b> 返回上页</a>
+	        </div>
+        
+        <div class="login-wrap">
+            <div class="logo">
+                
+				   
+				   
+				   
+						<!-- <img src="https://w1.hoopchina.com.cn/passport-prod/static/pc/images/logo.png" alt=""> -->
+				        <span  class="" style="font-size:36px;color:red;">
+							用
+						</span>
+						<span  class="" style="font-size:36px;color:red;">
+							户
+						</span>
+						<span  class="" style="font-size:36px;color:red;">
+							注册
+						</span>
+            </div>
+            
+            	
+            	
+            		<!-- 登录名、邮箱、手机+密码登录 -->
+		            <form class="common-form login-form" id="addFrom" autocomplete="off">
+		                <ul>
+		                    <li>
+		                        <div class="ipt-wrap">
+		                            <input autocomplete="off" type="text" name="username" placeholder="用户名" onblur="fn1()" id="name" tabindex="1"><span id="sp1"></span>
+		                        </div>
+		                    </li>
+		                    <li id="J_insertVali">
+		                        <div class="ipt-wrap"><u></u>
+		                            <input autocomplete="off" type="password" name="userpwd" onblur="fn2()" placeholder="密码" id="pwd" tabindex="2"><span id="sp2"></span>
+		                        </div>
+		                    </li>
+		                   <li>
+						     <div class="ipt-wrap">
+								<input type="text" name="paypwd" id="ppwd" placeholder="支付密码" onblur="fn4()"><span id="sp4"></span>
+						     </div>
+						   </li>
+						   <li>
+						     <div class="ipt-wrap">
+								<input type="text" name="address.adressname" placeholder="收货地址" id="dizhi" onblur="fn5()"><span id="sp5"></span><br>
+						     </div>
+						   </li>
+		                    <li><input class="submit-btn" type="button" value="注册" onclick="tijiao()"></li>
+		                </ul>
+		            </form>
+		           
+            	
+            
+
+        </div>
+
+        <div class="pop-wrap">
+				<div class="pop-hd">提示
+
+				</div>
+				<div class="pop-txt">
+
+				</div>
+				<div class="pop-btn pop-btn2">
+
+				</div>
+		</div>
+		<div id="cboxOverlay" ></div>
+		</div>
+	</div>
+</body>
+
+  <script type="text/javascript">
+	 //提交注册用户
+    function tijiao(){
+        var name = fn1();
+        var pwd = fn2();
+        var dizhi = fn5();
+        var ppwd = fn4();
+
+        if(name && pwd && dizhi && ppwd){
+            $.ajax({
+                url:"/zhuce",
+                data:$("#addFrom").serialize(),
+                type:"post",
+                async:false,
+                success:function(data){
+                    if(data=="1"){
+                        alert("用户名已存在")
+                    }
+                    if(data=="2") {
+                        //注册成功之后跳转登录页面
+                        location.href = "/login";
+                    }
+                },error:function(){
+                    alert("注册错误");
+                }
+            })
+        }else {
+            alert("不能为空");
+        }
+    }
+
+
+
+
+    //判断用户名是否为空
+    function fn1(){
+        var name = $("#name").val();
+        //正则表达式；
+        var reg = /^[0-9a-zA-Z]{6,10}$/;
+        if(name!=null && name!=""){
+            if(reg.test(name)) {
+                $("#sp1").html("<font color='green'>√</font>")
+                return true;
+            }else {
+                $("#sp1").html("<font color='red'>用户名只能写6-10位数字加字母</font>")
+                return false;
+            }
+        }else {
+            $("#sp1").html("<font color='red'>用户名不能为空</font>")
+            return false;
+        }
+    }
+
+
+    //判断密码是否为空
+    function fn2(){
+        var pwd = $("#pwd").val();
+
+        var reg = /^[0-9a-zA-Z]{6,10}$/;
+
+        if(pwd!=null && pwd!=""){
+            if(reg.test(pwd)) {
+
+                $("#sp2").html("<font color='green'>√</font>")
+                return true;
+            }else {
+                $("#sp2").html("<font color='red'>密码为6—10位的数字加字母</font>")
+                return false;
+            }
+        }else {
+            $("#sp2").html("<font color='red'>密码不能为空</font>")
+            return false;
+        }
+    }
+
+
+    //支付密码是否为空
+    function fn4(){
+        var ppwd = $("#ppwd").val();
+
+        var reg = /^[0-9]{6}$/;
+        if(ppwd!=null && ppwd!=""){
+            if(reg.test(ppwd)) {
+                $("#sp4").html("<font color='green'>√</font>")
+                return true;
+            }else {
+                $("#sp4").html("<font color='red'>支付密必须为6位数字</font>")
+                return false;
+            }
+        }else {
+            $("#sp4").html("<font color='red'>支付密码不能为空</font>")
+            return false;
+        }
+    }
+
+
+    //地址不能为空
+    function fn5(){
+        var dizhi = $("#dizhi").val();
+
+        if(dizhi!=null && dizhi!=""){
+
+            $("#sp5").html("<font color='green'>√</font>")
+            return true;
+        }else {
+            $("#sp5").html("<font color='red'>地址不能为空</font>")
+            return false;
+        }
+    }
+
+  </script>
+
+</html>

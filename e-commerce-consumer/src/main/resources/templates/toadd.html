@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../js/kindeditor-4.1.10/themes/default/default.css" />
+    <link rel="stylesheet" href="../js/uploadify/uploadify.css">
+</head>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/uploadify/jquery.uploadify.min.js"></script>
+<script src="../js/kindeditor-4.1.10/kindeditor-all.js"></script>
+<body>
+<form id="addform">
+    商品名：<input type="text" name="commodityname" id="commodityname"><br><br>
+    类型：<select  id="type.typeid" name="type.typeid" >
+    <option value="">--请选择--</option>
+    <option th:each="t:${type}"
+            th:value="${t.typeid}"
+            th:text="${t.typename}"></option>
+</select><br><br>
+   <!-- <select disabled="disabled" id="selectTheme" name="competitionThemeId" lay-verify="">
+        <option>请选择参赛的主题</option>
+        <option th:each="theme : ${themeList}" th:value="${theme.id}"
+                th:text="${theme.theme}"
+                th:selected="${theme.id} eq ${participant.competitionThemeId}"></option>
+    </select>-->
+    商品价格：<input type="text" name="commodityprice" id="commodityprice"><br><br>
+    商品数量：<input type="text" name="commoditycount"><br><br>
+    商品图1：<img id="add_img" width="100px" height="100px" />
+            <!-- 文件域 -->
+            <input type="file" name="image" id="uploadImg"/>
+            <!-- 隐藏域：用于向后台传值 -->
+            <input type="hidden" id="hideImg" name="picture.pictureurl" />
+            <!-- 显示进度条的div -->
+            <div id="fileQueue"></div><br><br>
+    商品图2：<img id="add_img1" width="100px" height="100px" />
+            <!-- 文件域 -->
+            <input type="file" name="image1" id="uploadImg1"/>
+            <!-- 隐藏域：用于向后台传值 -->
+            <input type="hidden" id="hideImg1" name="picture1.pictureurl1" />
+            <!-- 显示进度条的div -->
+            <div id="fileQueue1"></div><br><br>
+    <br>
+    商品图3：<img id="add_img2" width="100px" height="100px" />
+            <!-- 文件域 -->
+            <input type="file" name="image2" id="uploadImg2"/>
+            <!-- 隐藏域：用于向后台传值 -->
+            <input type="hidden" id="hideImg2" name="picture2.pictureurl2" />
+            <!-- 显示进度条的div -->
+            <div id="fileQueue2"></div>
+    <br><br>
+    商品介绍：
+    <br><br>
+    <textarea id="content" rows="3" cols="10" name="commodityshow"></textarea><br><br>
+    <input type="button" onclick="add()" value="新增">
+</form>
+</body>
+<script>
+    //新增电影
+    function add() {
+        $.ajax({
+            url:"addCommodity",
+            type:"post",
+            data:$("#addform").serialize(),
+            success:function (data) {
+                location.href="toshanghu";
+            },error:function () {
+                alert("新增失败");
+            }
+        })
+    }
+$("#uploadImg").uploadify({
+//插件自带  不可忽略的参数flash插件
+'swf':'../js/uploadify/uploadify.swf',
+//前台请求后台的url 不可忽略的参数
+'uploader': 'uploadCommodityImg',
+//给div的进度条加背景 不可忽略
+'queueID': 'fileQueue',
+//上传文件文件名 跟file标签 name值 保持一致
+'fileObjName' : 'image',
+//给上传按钮设置文字
+'buttonText': '上传图片',
+//设置文件是否自动上传
+'auto': true,
+//可以同时选择多个文件 默认为true  不可忽略
+'multi': true,
+//上传后队列是否消失
+'removeCompleted': true,
+//允许上传的文件后缀 
+'fileExt': '*.jpg;*.gif;*.png',
+//
+'cancelImg': '../js/uploadify/uploadify-cancel.png',
+//队列消失时间
+'removeTimeout' : 1,
+//上传文件的个数，项目中一共可以上传文件的个数
+'uploadLimit':  -1,
+'fileTypeExts': '*.jpg;*.png',
+//成功回调函数 file：文件对象。data后台输出数据
+'onUploadSuccess':function(file,data,response){
+//alert(file.name+" 路径："+data)
+var imgurl = "http://localhost:8080/"+data;
+//图片回显， 预览
+$("#add_img").attr("src",imgurl)
+// 文本框 回填
+$('#hideImg').val(imgurl);
+}
+});
+    $("#uploadImg1").uploadify({
+//插件自带  不可忽略的参数flash插件
+        'swf':'../js/uploadify/uploadify.swf',
+//前台请求后台的url 不可忽略的参数
+        'uploader': 'uploadCommodityImg',
+//给div的进度条加背景 不可忽略
+        'queueID': 'fileQueue1',
+//上传文件文件名 跟file标签 name值 保持一致
+        'fileObjName' : 'image',
+//给上传按钮设置文字
+        'buttonText': '上传图片',
+//设置文件是否自动上传
+        'auto': true,
+//可以同时选择多个文件 默认为true  不可忽略
+        'multi': true,
+//上传后队列是否消失
+        'removeCompleted': true,
+//允许上传的文件后缀 
+        'fileExt': '*.jpg;*.gif;*.png',
+//
+        'cancelImg': '../js/uploadify/uploadify-cancel.png',
+//队列消失时间
+        'removeTimeout' : 1,
+//上传文件的个数，项目中一共可以上传文件的个数
+        'uploadLimit':  -1,
+        'fileTypeExts': '*.jpg;*.png',
+//成功回调函数 file：文件对象。data后台输出数据
+        'onUploadSuccess':function(file,data,response){
+//alert(file.name+" 路径："+data)
+            var imgurl = "http://localhost:8080/"+data;
+//图片回显， 预览
+            $("#add_img1").attr("src",imgurl)
+// 文本框 回填
+            $('#hideImg1').val(imgurl);
+        }
+    });
+    $("#uploadImg2").uploadify({
+//插件自带  不可忽略的参数flash插件
+        'swf':'../js/uploadify/uploadify.swf',
+//前台请求后台的url 不可忽略的参数
+        'uploader': 'uploadCommodityImg',
+//给div的进度条加背景 不可忽略
+        'queueID': 'fileQueue2',
+//上传文件文件名 跟file标签 name值 保持一致
+        'fileObjName' : 'image',
+//给上传按钮设置文字
+        'buttonText': '上传图片',
+//设置文件是否自动上传
+        'auto': true,
+//可以同时选择多个文件 默认为true  不可忽略
+        'multi': true,
+//上传后队列是否消失
+        'removeCompleted': true,
+//允许上传的文件后缀 
+        'fileExt': '*.jpg;*.gif;*.png',
+//
+        'cancelImg': '../js/uploadify/uploadify-cancel.png',
+//队列消失时间
+        'removeTimeout' : 1,
+//上传文件的个数，项目中一共可以上传文件的个数
+        'uploadLimit':  -1,
+        'fileTypeExts': '*.jpg;*.png',
+//成功回调函数 file：文件对象。data后台输出数据
+        'onUploadSuccess':function(file,data,response){
+//alert(file.name+" 路径："+data)
+            var imgurl = "http://localhost:8080/"+data;
+//图片回显， 预览
+            $("#add_img2").attr("src",imgurl)
+// 文本框 回填
+            $('#hideImg2').val(imgurl);
+        }
+    });
+//富文本编辑器
+var editor;
+KindEditor.ready(function(K) {
+//将编辑器添加到文档中
+editor = K.create('#content', {
+cssPath : '<%=request.getContextPath()%>/js/kindeditor-4.1.10/plugins/code/prettify.css',
+//指定编辑器iframe document的CSS文件，用于设置可视化区域的样式。
+uploadJson: "<%=request.getContextPath()%>/js/kindeditor-4.1.10/jsp/upload_json.jsp",
+//指定上传文件的服务器端程序。
+fileManagerJson: "<%=request.getContextPath()%>/js/kindeditor-4.1.10/jsp/file_manager_json.jsp",
+//指定浏览远程图片的服务器端程序。
+allowFileManager : true,
+//true时显示浏览远程服务器按钮 ;默认值: false
+//将富文本编辑中的内容同步到表单序列化中
+afterBlur:function(){this.sync();}
+});
+});
+</script>
+</html>

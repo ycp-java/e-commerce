@@ -12,6 +12,16 @@ public class Merchant implements Serializable {
 
     private Integer jurisdictionid;
 
+    private Jurisdiction jurisdiction;
+
+    public Jurisdiction getJurisdiction() {
+        return jurisdiction;
+    }
+
+    public void setJurisdiction(Jurisdiction jurisdiction) {
+        this.jurisdiction = jurisdiction;
+    }
+
     public Integer getMerchantid() {
         return merchantid;
     }
